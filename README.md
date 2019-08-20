@@ -1,2 +1,26 @@
 # leaflet-learn
-windy，scatter，lines，geotiff render，leaflet-echarts4 ... 一些地图可视化demo，大部分为气象数据的渲染
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
