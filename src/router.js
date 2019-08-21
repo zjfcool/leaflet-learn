@@ -7,6 +7,13 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'home',
+      redirect: {
+        name:'geotiff'
+      },
+    },
+    {
+      path: '/geotiff',
       name: 'geotiff',
       component: () => import(/* webpackChunkName: "geotiff" */ './views/TiffMapLayer.vue')
     },
