@@ -19,7 +19,7 @@ export default {
         type: Array,
         default: () => []
     },
-    noValueData: {
+    noDataValue: {
         default: undefined
     }
   },
@@ -63,7 +63,7 @@ export default {
         }
       }
       let a = [];
-      a = a.concat(...tempData).filter(item => item!==this.noValueData);
+      a = a.concat(...tempData).filter(item => item!==this.noDataValue);
       let intervalsSpd = this.intervalsSpdFormat(
         Math.min(...a),
         Math.max(...a),
@@ -94,7 +94,7 @@ export default {
         let yTiff = (e.latlng.lat - geoTransform[3]) / geoTransform[5];
         if(xTiff>tiffWidth||yTiff>tiffHeight) return;
         let temp = tempData[Math.round(yTiff)][Math.round(xTiff)];
-        if(temp == this.noValueData) return;
+        if(temp == this.noDataValue) return;
         L.popup()
           .setLatLng(e.latlng)
           .setContent(`${temp}`)
@@ -136,8 +136,7 @@ export default {
     }
   },
   beforeDestroy(){
-    this.layer.remove()
-    console.log('beford')
+    this.layer&&this.layer.remove()
   }
 };
 </script>

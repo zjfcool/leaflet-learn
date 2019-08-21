@@ -18,14 +18,12 @@ export default {
       type: Array,
       default: () => []
     },
-    noValueData: {
+    noDataValue: {
       default: undefined
     }
   },
   data() {
-    return {
-      imgsrc: ""
-    };
+    return {};
   },
   methods: {
     async init() {
@@ -56,10 +54,6 @@ export default {
         0,
         -1 * pixelScale[1]
       ];
-    //   let arrbuffer = new Float32Array(data[0]);
-    //   for (let i = 0; i < arrbuffer.length; i++) {
-    //     if (isNaN(arrbuffer[i])) arrbuffer[i] = 0;
-    //   }
       let tempData = new Array(tileHeight);
       for (let j = 0; j < tileHeight; j++) {
         tempData[j] = new Array(tileWidth);
@@ -67,7 +61,7 @@ export default {
           tempData[j][i] = data[0][i + j * tileWidth];
         }
       }
-      let arr = data[0].filter(item => item!==this.noValueData);
+      let arr = data[0].filter(item => item!==this.noDataValue);
       let min = Math.min(...arr),
         max = Math.max(...arr);
 
@@ -77,7 +71,6 @@ export default {
       const context = canvas.getContext("2d");
       const id = context.createImageData(tileWidth, tileHeight);
       const canvasData = id.data;
-      console.log(canvas.width, canvas.height);
       let scale = chroma
         .scale(this.colors)
         .domain(this.ranges);
@@ -85,7 +78,7 @@ export default {
         for (let x = 0; x < tileWidth; x++) {
           const i = y * tileWidth + x;
           let rgba = scale(data[0][i]).rgba();
-          if(data[0][i] == this.noValueData) rgba=[0,0,0,0];
+          if(data[0][i] == this.noDataValue) rgba=[0,0,0,0];
           const index = (y * tileWidth + x) * 4;
           canvasData[index + 0] = rgba[0];
           canvasData[index + 1] = rgba[1];
@@ -111,7 +104,7 @@ export default {
         let yTiff = (e.latlng.lat - geoTransform[3]) / geoTransform[5];
         if (xTiff > tileWidth || yTiff > tileHeight) return;
         let temp = tempData[Math.round(yTiff)][Math.round(xTiff)];
-        if (temp === this.noValueData) return;
+        if (temp === this.noDataValue) return;
         L.popup()
           .setLatLng(e.latlng)
           .setContent(`${temp}`)
@@ -136,7 +129,7 @@ export default {
     }
   },
   beforeDestroy(){
-      this.imgLayer.remove()
+      this.imgLayer&&this.imgLayer.remove()
   }
 };
 </script>

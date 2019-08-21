@@ -8,7 +8,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "home" */ './views/Home.vue')
+      component: () => import(/* webpackChunkName: "home" */ './views/TiffMapLayer.vue')
     },
   ]
 })

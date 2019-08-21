@@ -29,7 +29,7 @@ var GeoRasterLayer = L.GridLayer.extend({
             this._maxs = georaster.maxs;
             this._mins = georaster.mins;
             this._ranges = georaster.ranges;
-            this._no_data_value = georaster.no_data_value;
+            this._no_data_value = georaster.noDataValue;
             this._pixelWidth = georaster.pixelWidth;
             this._pixelHeight = georaster.pixelHeight;
             this._rasters = georaster.values;
@@ -64,22 +64,12 @@ var GeoRasterLayer = L.GridLayer.extend({
     },
 
     createTile: function createTile(coords) {
-      const t = Date.now()
 
-
-        /*
-            Unpacking values for use later.
-            We do this in order to increase speed.
-        */
-        var maxs = this._maxs;
-        var mins = this._mins;
-        var ranges = this._ranges;
         var no_data_value = this._no_data_value;
         var pixelWidth = this._pixelWidth;
         var pixelHeight = this._pixelHeight;
         var rasters = this._rasters;
         var scale = this.scale;
-        var tiff_width = this._tiff_width;
         var xmin = this._xmin;
         var ymin = this._ymin;
         var xmax = this._xmax;
@@ -132,17 +122,14 @@ var GeoRasterLayer = L.GridLayer.extend({
                 ) {
                         let x_in_raster_pixels = Math.floor( (lng - xmin) / pixelWidth );
                         let y_in_raster_pixels = Math.floor( (ymax - lat) / pixelHeight );
-                        //let values = rasters.map(raster => raster[y_in_raster_pixels][x_in_raster_pixels]);
-                        
-                        let value = this.interpolatedValueAtIndexes((lng - xmin) / pixelWidth,(ymax - lat) / pixelHeight)
-                        let color
-                        if (value != no_data_value && !isNaN(value) ) {
-                            // color = scale((value - mins[0]) / ranges[0]).hex();
-                            color = scale(value).hex();
-                        }else{
+                        let values = rasters.map(raster => raster[y_in_raster_pixels][x_in_raster_pixels]);
+                        let color;
+                        if(values[0]==no_data_value){
                             color ='rgba(0,0,0,0)'
+                        } else{
+                            let value = this.interpolatedValueAtIndexes((lng - xmin) / pixelWidth,(ymax - lat) / pixelHeight)
+                            color = scale(value).hex();
                         }
-                       context.fillStyle = color;
                        context.fillStyle = color;
 
                        context.fillRect(w * width_of_rectangle_in_pixels, h * height_of_rectangle_in_pixels, width_of_rectangle_in_pixels, height_of_rectangle_in_pixels);
@@ -152,8 +139,6 @@ var GeoRasterLayer = L.GridLayer.extend({
                 }
             }
         }
-
-      //console.log(Date.now() - t)
       return tile;
 
     },
