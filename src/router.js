@@ -7,8 +7,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import(/* webpackChunkName: "home" */ './views/TiffMapLayer.vue')
+      name: 'geotiff',
+      component: () => import(/* webpackChunkName: "geotiff" */ './views/TiffMapLayer.vue')
+    },
+    {
+      path: '/ec',
+      name: 'leafletEcharts',
+      component: () => import(/* webpackChunkName: "leafletEcharts" */ './views/EchartsMapLayer.vue')
     },
   ]
 })

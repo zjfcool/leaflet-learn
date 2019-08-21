@@ -53,7 +53,11 @@ export default {
     background-color: #058eed;
     font-size: 14px;
     &.active {
-      background-color: red;
+      background-color: #0a6db1;
+    }
+    &:hover{
+        cursor: pointer;
+        background-color: #0a6db1;
     }
   }
 }
