@@ -1,27 +1,30 @@
 <template>
   <l-map ref="map" :zoom="zoom" :center="center" :options="{zoomControl: false,attributionControl: false}">
     <ul class="btn-group">
-      <li ref="btnItem" v-for="item in btnGroupList" :key="item.label" @click="changeLayer($event,item)">{{item.label}}</li>
+      <li ref="btnItem" v-for="item in btnGroupList" :key="item.label" @click.stop="changeLayer($event,item)">{{item.label}}</li>
     </ul>
     <div class="desc-wrapper">
       <p>说明：{{content}}</p>
       <a :href="linkTo">示例代码</a>
     </div>
     <l-tile-layer :url="url"></l-tile-layer>
-    <tiff-to-geojson-layer :data="tiffData" :ranges="ranges" :colors="colors" :noValueData="noValueData"></tiff-to-geojson-layer>
+    <component :is="componentId" :data="tiffData" :ranges="ranges" :colors="colors" :noValueData="noValueData"></component>
+    <!-- <tiff-to-geojson-layer :data="tiffData" :ranges="ranges" :colors="colors" :noValueData="noValueData"></tiff-to-geojson-layer> -->
   </l-map>
 </template>
 
 <script>
 import { LMap, LTileLayer } from "vue2-leaflet";
 import TiffToGeojsonLayer from './TiffToGeojsonLayer';
+import TiffToImageLayer from './TiffToImageLayer';
 import axios from 'axios';
 export default {
   name: "MapLayer",
   components: {
     LMap,
     LTileLayer,
-    TiffToGeojsonLayer
+    TiffToGeojsonLayer,
+    TiffToImageLayer
   },
   data() {
     return {
@@ -36,13 +39,22 @@ export default {
       btnGroupList:[
         {
           label:"tiffToGeojson",
+          id:"TiffToGeojsonLayer",
           data:"/wrfout.tif",
           link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToGeojsonLayer.vue',
           desc:"tiff数据通过geotiff.js解析，将其在转化为等值面的geojson，通过适量切片的形式渲染到地图中"
+        },
+        {
+          label:"tiffToImage",
+          data:"/wrfout.tif",
+          id:"TiffToImageLayer",
+          link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToImageLayer.vue',
+          desc:"tiff数据通过geotiff.js解析，将其生成canvas，再由canvas转图片，在渲染到地图中"
         }
       ],
       content:"",
-      linkTo:""
+      linkTo:"",
+      componentId:""
     };
   },
   methods:{
@@ -57,6 +69,7 @@ export default {
         item.classList.remove('active')
       })
       e.currentTarget.classList.add('active')
+      this.componentId=item.id;
       this.tiffData=item.data;
       this.content=item.desc;
       this.linkTo=item.link;

@@ -28,7 +28,6 @@ export default {
   },
   methods: {
     async init() {
-      console.log(this.data)
       if (this.data.length == 0) return;
       this.map = this.$parent.mapObject;
       let tiff ;
@@ -68,7 +67,7 @@ export default {
       let intervalsSpd = this.intervalsSpdFormat(
         Math.min(...a),
         Math.max(...a),
-        80
+        20
       );
       this.geojson_data = rastertools.isobands(
         tempData,
@@ -135,6 +134,10 @@ export default {
     ranges(){
       this.layer&&this.layer.redraw();
     }
+  },
+  beforeDestroy(){
+    this.layer.remove()
+    console.log('beford')
   }
 };
 </script>

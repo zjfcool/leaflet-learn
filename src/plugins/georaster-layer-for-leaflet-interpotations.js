@@ -201,7 +201,6 @@ var GeoRasterLayer = L.GridLayer.extend({
         var ry = 1 - y;
         return g00 * rx * ry + g10 * x * ry + g01 * rx * y + g11 * x * y;
       },
-    // method from https://github.com/Leaflet/Leaflet/blob/bb1d94ac7f2716852213dd11563d89855f8d6bb1/src/layer/ImageOverlay.js
     getBounds: function getBounds() {
         return this._bounds;
     },
@@ -221,8 +220,6 @@ var GeoRasterLayer = L.GridLayer.extend({
     },
     _queryvalue(e){
       let xmin = this._xmin;
-      let ymin = this._ymin;
-      let xmax = this._xmax;
       let ymax = this._ymax;
       let pixelWidth = this._pixelWidth;
       let pixelHeight = this._pixelHeight;
@@ -234,7 +231,6 @@ var GeoRasterLayer = L.GridLayer.extend({
     const value =  rasters[y_pixels][x_pixels]
     if(!value) return;
     L.popup().setLatLng(e.latlng)
-        //.setContent("压强 " +value+"Pa")
         .setContent(value+'')
         .openOn(this._map);
     },
