@@ -53,6 +53,7 @@ L.EchartsLayer = L.Class.extend({
         self.reload = function () {
             self._once = 1;
             self._ec && self._ec.clear();
+            console.log(self._option);
             self._ec.setOption(self._option);
         }
         /**

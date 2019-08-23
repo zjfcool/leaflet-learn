@@ -5,10 +5,10 @@ import "@/plugins/leaflet-echarts.js";
 import echarts from "echarts";
 import chroma from "chroma-js";
 export default {
-  name: "WindyLayer",
+  name: "ScatterLayer",
   props: {
     /**
-     *  Array<Array<lng,lat,dx,dy,value>>,
+     *  Array<Object{name:string,value:Array<lng,lat,value>}>,
      * */
     data: {
       type: Array,
@@ -18,7 +18,7 @@ export default {
       type: Object,
       default: () => ({
         colors: ["#A000C8", "#3BA0FF", "#F00582"],
-        values: [0, 8]
+        values: [0, 80]
       })
     }
   },
@@ -35,7 +35,7 @@ export default {
         tooltip: {
           trigger: "item",
           formatter: function(params) {
-            return params.value[4];
+            return params.value[2];
           }
         },
         geo: {
@@ -56,32 +56,28 @@ export default {
         },
         series: [
           {
-            type: "custom",
-            coordinateSystem: "geo",
-            data: this.data,
-            renderItem: function(params, api) {
-              var x = api.value(0),
-                y = api.value(1),
-                dx = api.value(2),
-                dy = api.value(3);
-              var start = api.coord([x - dx, y - dy]);
-              var end = api.coord([x + dy, y + dy]);
-              return {
-                type: "line",
-                shape: {
-                  x1: start[0],
-                  y1: start[1],
-                  x2: end[0],
-                  y2: end[1]
-                },
-                style: {
-                  lineWidth: 2,
-                  stroke: self.getColor(api.value(4))
-                }
-              };
+          type: "scatter",
+          coordinateSystem: "geo",
+          zlevel:2,
+          data: this.data,
+          symbolSize: 10,
+          label: {
+            normal: {
+              show: false
             },
-            progressive: 2000
+            emphasis: {
+              show: false
+            }
+          },
+          progressive: 1e6,
+          itemStyle: {
+            emphasis: {
+              borderColor: "#fff",
+              borderWidth: 1,
+              color: (item)=>this.getColor(item.value[2])
+            }
           }
+        },
         ]
       };
       this.overlay.setOption(this.option);
@@ -100,6 +96,7 @@ export default {
       });
     },
     rangeData() {
+      console.log(this.rangeData)
       this.overlay.reload();
     }
   },
