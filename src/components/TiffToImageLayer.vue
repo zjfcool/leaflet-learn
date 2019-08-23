@@ -61,9 +61,9 @@ export default {
           tempData[j][i] = data[0][i + j * tileWidth];
         }
       }
-      let arr = data[0].filter(item => item!==this.noDataValue);
-      let min = Math.min(...arr),
-        max = Math.max(...arr);
+    //   let arr = data[0].filter(item => item!==this.noDataValue);
+    //   let min = Math.min(...arr),
+    //     max = Math.max(...arr);
 
       const canvas = document.createElement("canvas");
       canvas.width = tileWidth;

@@ -64,9 +64,18 @@ export default {
       }
       let a = [];
       a = a.concat(...tempData).filter(item => item!==this.noDataValue);
+      let min=0,max=0;
+      for(let i=0;i<a.length;i++){
+        if(min>a[i]){
+          min = a[i]
+        }
+        if(max<a[i]){
+          max = a[i];
+        }
+      }
       let intervalsSpd = this.intervalsSpdFormat(
-        Math.min(...a),
-        Math.max(...a),
+        min,
+        max,
         20
       );
       this.geojson_data = rastertools.isobands(
