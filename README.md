@@ -1,5 +1,8 @@
 # leaflet-learn
 
+## Example
+[demo](https://zjfcool.github.io/leaflet-learn/dist/)
+
 ## Project setup
 ```
 npm install
