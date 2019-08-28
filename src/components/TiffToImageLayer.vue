@@ -19,7 +19,7 @@ export default {
       default: () => []
     },
     noDataValue: {
-      default: undefined
+      default: 999999
     }
   },
   data() {

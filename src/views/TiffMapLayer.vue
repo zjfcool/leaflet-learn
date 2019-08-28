@@ -3,7 +3,7 @@
     <button-group :data="btnGroupList" @changeLayer="changeLayer"></button-group>
     <description :data="description"/>
     <l-tile-layer :url="url"></l-tile-layer>
-    <component :is="componentId" :data="tiffData" :ranges="ranges" :colors="colors" :noDataValue="noDataValue"></component>
+    <component :is="componentId" :data="tiffData" :ranges="ranges" :colors="colors" ></component>
   </l-map>
 </template>
 
@@ -41,12 +41,14 @@ export default {
           label:"tiffToGeojson",
           id:"TiffToGeojsonLayer",
           data:"/wrfout.tif",
+          // noDataValue:999999,
           link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToGeojsonLayer.vue',
           desc:"tiff数据通过geotiff.js解析，将其在转化为等值面的geojson，通过适量切片的形式渲染到地图中"
         },
         {
           label:"tiffToImage",
           data:"/wrfout.tif",
+          // noDataValue:999999,
           id:"TiffToImageLayer",
           link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToImageLayer.vue',
           desc:"tiff数据通过geotiff.js解析，将其生成canvas，再由canvas转图片，在渲染到地图中"
@@ -54,6 +56,7 @@ export default {
         {
           label:"tiffToGrid",
           data:"/wrfout.tif",
+          // noDataValue:999999,
           id:"TiffToGridLayer",
           link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToGridLayer.vue',
           desc:"tiff数据通过georaster解析，将其生成gridlayer，渲染到地图中"
@@ -80,6 +83,7 @@ export default {
       }
       this.description.content=item.desc;
       this.description.link=item.link;
+      // this.noDataValue=item.noDataValue;
     }
   },
 };
