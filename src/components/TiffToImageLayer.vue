@@ -89,6 +89,7 @@ export default {
 
       context.putImageData(id, 0, 0);
       //   return
+      console.log(bounds)
       if (this.imgLayer) this.map.removeLayer(this.imgLayer);
       this.imgLayer = L.imageOverlay(
         canvas.toDataURL(),
