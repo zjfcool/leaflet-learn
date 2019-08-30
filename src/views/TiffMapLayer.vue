@@ -40,14 +40,14 @@ export default {
         {
           label:"tiffToGeojson",
           id:"TiffToGeojsonLayer",
-          data:"http://zjfcool.github.io/leaflet-learn/dist/wrfout.tif",
+          data:"/wrfout.tif",
           // noDataValue:999999,
           link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToGeojsonLayer.vue',
           desc:"tiff数据通过geotiff.js解析，将其在转化为等值面的geojson，通过适量切片的形式渲染到地图中"
         },
         {
           label:"tiffToImage",
-          data:"http://zjfcool.github.io/leaflet-learn/dist/wrfout.tif",
+          data:"/wrfout.tif",
           // noDataValue:999999,
           id:"TiffToImageLayer",
           link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToImageLayer.vue',
@@ -55,7 +55,7 @@ export default {
         },
         {
           label:"tiffToGrid",
-          data:"http://zjfcool.github.io/leaflet-learn/dist/wrfout.tif",
+          data:"/wrfout.tif",
           // noDataValue:999999,
           id:"TiffToGridLayer",
           link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToGridLayer.vue',
