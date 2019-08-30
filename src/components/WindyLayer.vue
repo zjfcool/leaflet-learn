@@ -106,9 +106,10 @@ export default {
   mounted() {
     if (this.data.length == 0) return;
     this.init();
+    console.log('mounted windy')
   },
   beforeDestroy(){
-    this.myChart.clear()
+    this.overlay.destory()
   }
 };
 </script>

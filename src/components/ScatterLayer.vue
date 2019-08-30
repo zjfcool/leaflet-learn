@@ -102,10 +102,11 @@ export default {
   },
   mounted() {
     if (this.data.length == 0) return;
+    console.log('mounted scatter')
     this.init();
   },
   beforeDestroy(){
-    this.myChart.clear()
+    this.overlay.destory()
   }
 };
 </script>

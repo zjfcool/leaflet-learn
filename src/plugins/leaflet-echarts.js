@@ -21,7 +21,8 @@ L.EchartsLayer = L.Class.extend({
         div.style.top = 0;
         div.style.left = 0;
         div.style.zIndex = 555
-        map.getPanes().overlayPane.appendChild(div);
+        this.overlayPane = map.getPanes().overlayPane;
+        this.overlayPane.appendChild(div);
         this._init(map, ec);
         this._data = oriData
         this._once = 0;
@@ -206,22 +207,13 @@ L.EchartsLayer = L.Class.extend({
          * @private
          */
         self._bindEvent = function () {
+            console.log('hello')
             self._map.on('move', _moveHandler('moving'));
             self._map.on('moveend', _moveHandler('moveend'));
             self._map.on('zoomstart', function () {
                 self._ec.clear();
             }); //去掉zoomstart事件
             self._map.on('zoomend', _zoomChangeHandler);
-            // self._ec.getZr().on('dragstart', _dragZrenderHandler(true));
-            //self._ec.getZr().on('dragend', _dragZrenderHandler(false));
-            //  self._ec.getZr().on('mouseup', function() {
-            // self.setOption(self._option);
-            //修改了echarts源码解决了这个问题
-            // });
-            // self._ec.getZr().on('mousedown', function() {
-            // self._ec.clear();
-            //修改了echarts源码解决了这个问题
-            // });
             self._ec.getZr().on('mousewheel', function (e) {
                 if (self._map.getZoom() == self._map.getMaxZoom()) {
                     self._ec.clear(); //在mousewheel的时候清除echarts内容
@@ -295,14 +287,11 @@ L.EchartsLayer = L.Class.extend({
                 clearTimeout(timer);
                 timer = setTimeout(() => {
                     self._once = 1;
+                    console.log(self._option)
                     self.setOption(self._option)
                 }, 150);
             }
         }
-
-        // function _zoomatartChangeHandler() {
-        //   self._ec.clear();
-        // }
 
         /**
          * 地图移动、如拖拽触发事件
@@ -327,26 +316,9 @@ L.EchartsLayer = L.Class.extend({
                 }
             }
         }
-
-        /**
-         * Zrender拖拽触发事件
-         *
-         * @param {boolean} isStart
-         * @return {Function}
-         * @private
-         */
-        function _dragZrenderHandler(isStart) {
-
-            return function () {
-                let func = isStart ? 'disable' : 'enable';
-                if (isStart) {
-                    self._ec.clear();
-                } else {
-                    _zoomChangeHandler()
-                }
-                self._map.dragging[func]();
-            };
-        }
+    },
+    destory: function(){
+        this.overlayPane.removeChild(this._echartsContainer);
     }
 });
 L.echartsLayer = function (map, ec, data = []) {

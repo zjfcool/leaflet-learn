@@ -118,15 +118,14 @@ export default {
   },
   watch: {
     data() {
-      if(this.imgLayer) return this.imgLayer.redraw();
       this.init()
       
     },
     colors(){
-      this.imgLayer&&this.imgLayer.redraw();
+      this.init()
     },
     ranges(){
-      this.imgLayer&&this.imgLayer.redraw();
+      this.init()
     }
   },
   beforeDestroy(){
