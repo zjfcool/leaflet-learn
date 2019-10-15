@@ -9,12 +9,14 @@ var GeoRasterLayer = L.GridLayer.extend({
     initialize: function initialize(options) {
         try {
             console.log("starting GeoRasterLayer.initialize with", options);
-
-            if (!options.keepBuffer) options.keepBuffer = 25;
-
-            if (!options.resolution) options.resolution = Math.pow(2, 5);
-
-            if (options.updateWhenZooming === undefined) options.updateWhenZooming = false;
+            options = Object.assign({
+                keepBuffer: 25,
+                resolution: 2**5,
+                updateWhenZooming: false,
+                interpolation: false
+            },options)
+            
+            
 
             var georaster = options.georaster;
             this.georaster = georaster;
@@ -127,7 +129,7 @@ var GeoRasterLayer = L.GridLayer.extend({
                         if(values[0]==no_data_value){
                             color ='rgba(0,0,0,0)'
                         } else{
-                            let value = this.interpolatedValueAtIndexes((lng - xmin) / pixelWidth,(ymax - lat) / pixelHeight)
+                            let value = this.options.interpolation?this.interpolatedValueAtIndexes((lng - xmin) / pixelWidth,(ymax - lat) / pixelHeight):values[0]
                             color = scale(value).hex();
                         }
                        context.fillStyle = color;

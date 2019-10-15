@@ -40,8 +40,8 @@ export default {
       }
       const image = await tiff.getImage();
       const data = await image.readRasters();
-      const tileWidth = image.getWidth();
-      const tileHeight = image.getHeight();
+      const tiffWidth = image.getWidth();
+      const tiffHeight = image.getHeight();
       const samplesPerPixel = image.getSamplesPerPixel();
       const bounds = image.getBoundingBox();
       const tiepoint = image.getTiePoints()[0];
@@ -54,11 +54,11 @@ export default {
         0,
         -1 * pixelScale[1]
       ];
-      let tempData = new Array(tileHeight);
-      for (let j = 0; j < tileHeight; j++) {
-        tempData[j] = new Array(tileWidth);
-        for (let i = 0; i < tileWidth; i++) {
-          tempData[j][i] = data[0][i + j * tileWidth];
+      let tempData = new Array(tiffHeight);
+      for (let j = 0; j < tiffHeight; j++) {
+        tempData[j] = new Array(tiffWidth);
+        for (let i = 0; i < tiffWidth; i++) {
+          tempData[j][i] = data[0][i + j * tiffWidth];
         }
       }
     //   let arr = data[0].filter(item => item!==this.noDataValue);
@@ -66,6 +66,10 @@ export default {
     //     max = Math.max(...arr);
 
       const canvas = document.createElement("canvas");
+      const rightBottomPixel = this.map.latLngToContainerPoint([bounds[1],bounds[2]])
+      const leftTopPixel = this.map.latLngToContainerPoint([bounds[3],bounds[0]]);
+      const tileWidth = rightBottomPixel.x - leftTopPixel.x,
+            tileHeight = rightBottomPixel.y - leftTopPixel.y;
       canvas.width = tileWidth;
       canvas.height = tileHeight;
       const context = canvas.getContext("2d");
@@ -76,14 +80,20 @@ export default {
         .domain(this.ranges);
       for (let y = 0; y < tileHeight; y++) {
         for (let x = 0; x < tileWidth; x++) {
-          const i = y * tileWidth + x;
-          let rgba = scale(data[0][i]).rgba();
-          if(data[0][i] == this.noDataValue) rgba=[0,0,0,0];
-          const index = (y * tileWidth + x) * 4;
-          canvasData[index + 0] = rgba[0];
-          canvasData[index + 1] = rgba[1];
-          canvasData[index + 2] = rgba[2];
-          canvasData[index + 3] = rgba[3] * 255;
+          const latlng = this.map.layerPointToLatLng([leftTopPixel.x+x,leftTopPixel.y+y])
+          const px = ( latlng.lng - geoTransform[0])/geoTransform[1]
+          const py = ( latlng.lat - geoTransform[3])/geoTransform[5]
+          if(Math.floor(px) >= 0 && Math.floor(py) >= 0){
+            // console.log(Math.floor(px),Math.floor(py))
+            let rgba = scale(tempData[Math.floor(py)][Math.floor(px)]).rgba();
+            if(tempData[Math.floor(py)][Math.floor(px)] == this.noDataValue) rgba=[0,0,0,0];
+            const index = (y * tileWidth + x) * 4;
+            canvasData[index + 0] = rgba[0];
+            canvasData[index + 1] = rgba[1];
+            canvasData[index + 2] = rgba[2];
+            canvasData[index + 3] = rgba[3] * 255;
+          }
+          
         }
       }
 

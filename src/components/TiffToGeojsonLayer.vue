@@ -94,6 +94,11 @@ export default {
           },
         })
       this.layer.addTo(this.map);
+      // this.pbflayer = L.vectorGrid.protobuf("https://{s}.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token={token}", {
+      //     subdomains: "abcd",
+      //     token: "pk.eyJ1IjoiempmY29vbCIsImEiOiJjaXkweGdmNm8wMDZ5MzNsYW02bmNuMDE5In0.zfhxXcLdVb4bXBsA9Xp6EQ"
+      // });
+      // console.log(this.pbflayer.addTo(this.map))
     },
     applyGeoTransform(x, y, geoTransform){
       let xgeo = geoTransform[0] + x*geoTransform[1] + y*geoTransform[2];

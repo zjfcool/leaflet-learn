@@ -287,7 +287,6 @@ L.EchartsLayer = L.Class.extend({
                 clearTimeout(timer);
                 timer = setTimeout(() => {
                     self._once = 1;
-                    console.log(self._option)
                     self.setOption(self._option)
                 }, 150);
             }

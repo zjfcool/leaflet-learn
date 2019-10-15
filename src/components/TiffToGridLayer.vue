@@ -70,7 +70,6 @@ export default {
   },
   watch: {
     data() {
-      if (this.layer) return this.layer.redraw();
       this.update();
     },
     colors() {
