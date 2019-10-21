@@ -24,6 +24,18 @@ export default {
           link:{
             name:'leafletEcharts'
           }
+        },
+        {
+          label:'flow',
+          link:{
+            name:'flow'
+          }
+        },
+        {
+          label:'points',
+          link:{
+            name:'points'
+          }
         }
       ]
     }
