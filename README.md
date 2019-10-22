@@ -63,7 +63,7 @@ for (let j = 0; j < this.tiffHeight; j++) {
 import {isobands} from "raster-marching-squares";
 <!-- 区间划分 -->
 const intervalsSpd = [-1,0,1,2,3,4,5];
-this.geojson_data = rastertools.isobands(
+this.geojson_data = isobands(
     this.tempData,
     this.geoTransform,
     intervalsSpd
@@ -138,6 +138,8 @@ L.imageOverlay(
 ### 风场
 
 1. 动态风场，使用插件[leaflet-velocity](https://github.com/zjfcool/leaflet-learn/blob/master/src/plugins/leaflet-velocity.js),[示例代码](https://github.com/zjfcool/leaflet-learn/blob/master/src/components/FlowLayer.vue)
+
+2. 静态风场[示例代码](https://github.com/zjfcool/leaflet-learn/blob/master/src/components/StaticFlowLayer.vue)
 
 ### 散点聚合
 

@@ -12,7 +12,9 @@ import { LMap, LTileLayer } from "vue2-leaflet";
 import ButtonGroup from '@/components/ButtonGroup';
 import Description from '@/components/Description';
 import FlowLayer from '@/components/FlowLayer';
+import StaticFlowLayer from '@/components/StaticFlowLayer';
 import flowData from '@/assets/js/flow';
+import staticFlowData from '@/assets/js/staticWind';
 export default {
   name: "TiffMapLayer",
   components: {
@@ -21,6 +23,7 @@ export default {
     ButtonGroup,
     Description,
     FlowLayer,
+    StaticFlowLayer
   },
   data() {
     return {
@@ -44,6 +47,17 @@ export default {
           }, 
           link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/FlowLayer.vue',
           desc:"风场"
+        },
+        {
+          label:"静态风场",
+          id:"StaticFlowLayer",
+          data: staticFlowData,
+          rangeData:{
+            values:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9,],
+            colors:["#EE4620", "#EE462F", "#ED4633", "#EF6B6D", "#F3A4A5", "#F9DCDD", "#DCDCFE", "#A5A6FD", "#6F6DFC", "#3D4BFB", "#2A4AFC"],
+          }, 
+          link:'https://github.com/zjfcool/leaflet-learn/blob/master/src/components/StaticFlowLayer.vue',
+          desc:"静态风场"
         },
 
       ],

@@ -18,6 +18,7 @@ export default {
   methods: {
     init() {
       this.map = this.$parent.mapObject;
+      if(this.layer) this.map.removeLayer(this.layer);
       this.layer = L.velocityLayer({
         displayValues: true,
         displayOptions: {
@@ -41,6 +42,9 @@ export default {
       if(this.layer) return this.layer.setData(arr);
       this.init()
     }
+  },
+  beforeDestroy(){
+    this.map.removeLayer(this.layer)
   }
 };
 </script>
