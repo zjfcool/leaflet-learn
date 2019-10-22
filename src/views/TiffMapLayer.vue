@@ -68,7 +68,7 @@ export default {
         {
           label: "tiffToGeojson",
           id: "TiffToGeojsonLayer",
-          data: "/wrfout.tif",
+          data: "https://zjfcool.github.io/leaflet-learn/dist//wrfout.tif",
           // noDataValue:999999,
           link:
             "https://github.com/zjfcool/leaflet-learn/blob/master/src/components/TiffToGeojsonLayer.vue",
@@ -77,7 +77,7 @@ export default {
         },
         {
           label: "tiffToImage",
-          data: "/wrfout.tif",
+          data: "https://zjfcool.github.io/leaflet-learn/dist//wrfout.tif",
           // noDataValue:999999,
           id: "TiffToImageLayer",
           link:
@@ -87,7 +87,7 @@ export default {
         },
         {
           label: "tiffToGrid",
-          data: "/wrfout.tif",
+          data: "https://zjfcool.github.io/leaflet-learn/dist//wrfout.tif",
           // noDataValue:999999,
           id: "TiffToGridLayer",
           link:
