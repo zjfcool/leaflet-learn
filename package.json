@@ -27,8 +27,8 @@
     "vue2-leaflet": "^2.2.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
+    "@vue/cli-plugin-babel": "^3.10.0",
+    "@vue/cli-service": "^5.0.8",
     "less": "~3.9.0",
     "less-loader": "^4.1.0",
     "vue-template-compiler": "^2.6.10"
